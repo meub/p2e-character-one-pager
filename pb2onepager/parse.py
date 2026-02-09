@@ -238,7 +238,7 @@ def parse_weapons(b: dict) -> list[Weapon]:
             damage_dice=damage_dice,
             damage_bonus=w.get("damageBonus", 0),
             damage_type=w.get("damageType", ""),
-            material=w.get("mat", ""),
+            material=w.get("mat") or "",
         ))
     return weapons
 

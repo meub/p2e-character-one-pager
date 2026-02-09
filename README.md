@@ -6,23 +6,66 @@ A CLI tool that converts [Pathbuilder 2e](https://pathbuilder2e.com/) character 
 
 ![Example one-pager for a level 8 Elf Wizard](docs/example.png)
 
-## Installation
+## Quick Start
 
-Requires Python 3.11+.
+The only prerequisite is **Python 3.11+**. The included `run.sh` script handles everything else automatically (virtual environment, dependencies).
 
 ```bash
-pip install -e .
+./run.sh character.json
+```
+
+That's it. On first run it will create a virtual environment and install dependencies, which takes a few seconds. Subsequent runs start instantly.
+
+The output is a self-contained HTML file (`character_onepager.html`) you can open in any browser or print to PDF.
+
+### Don't have Python 3.11+?
+
+Check your version with `python3 --version`. If you need to install or upgrade:
+
+**macOS (Homebrew):**
+
+```bash
+brew install python@3.13
+```
+
+**Linux (Ubuntu/Debian):**
+
+```bash
+sudo apt update && sudo apt install python3
+```
+
+**Any platform (pyenv)** — useful if you need to manage multiple Python versions:
+
+```bash
+# Install pyenv
+brew install pyenv          # macOS
+curl https://pyenv.run | bash  # Linux
+
+# Add to your shell config (~/.zshrc or ~/.bashrc):
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+# Then install Python and set it for this project
+pyenv install 3.13
+pyenv local 3.13
 ```
 
 ## Usage
 
-Export your character from Pathbuilder 2e as JSON, then run:
-
 ```bash
-pb2onepager build character.json
-```
+# Basic usage
+./run.sh wizard.json
 
-This produces `character_onepager.html` — a self-contained HTML file you can open in any browser or print to PDF.
+# Dark theme, A4 paper
+./run.sh wizard.json --theme dark --page-size a4
+
+# Force caster layout, show 12 skills
+./run.sh wizard.json --profile caster --skills 12
+
+# Custom output path
+./run.sh wizard.json -o sheets/my_wizard.html
+```
 
 ### Options
 
@@ -38,20 +81,15 @@ This produces `character_onepager.html` — a self-contained HTML file you can o
 | `--font-source` | `google` | Font loading: `google` (Alegreya via Google Fonts) or `none` |
 | `--debug` | off | Also output a `.debug.json` with the normalized character model |
 
-### Examples
+### Manual Installation
+
+If you prefer to install the `pb2onepager` command directly instead of using `run.sh`:
 
 ```bash
-# Basic usage
-pb2onepager build wizard.json
-
-# Dark theme, A4 paper
-pb2onepager build wizard.json --theme dark --page-size a4
-
-# Force caster layout, show 12 skills
-pb2onepager build wizard.json --profile caster --skills 12
-
-# Custom output path
-pb2onepager build wizard.json -o sheets/my_wizard.html
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -e .
+pb2onepager build character.json
 ```
 
 ## How It Works
