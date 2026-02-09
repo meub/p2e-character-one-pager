@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pb2onepager"
+version = "0.1.0"
+description = "Pathbuilder 2e → single-page HTML character sheet generator"
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic>=2.0",
+    "jinja2>=3.1",
+    "click>=8.1",
+]
+
+[project.scripts]
+pb2onepager = "pb2onepager.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["pb2onepager*"]
+
+[tool.setuptools.package-data]
+pb2onepager = ["assets/**/*.css", "templates/**/*.j2"]

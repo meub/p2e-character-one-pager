@@ -1,0 +1,242 @@
+{# ==================== SECTION MACROS ==================== #}
+
+{# --- Abilities --- #}
+{% macro section_abilities() %}
+{% if char.abilities %}
+<div class="section">
+  <div class="section-title">Abilities</div>
+  <div class="ability-row">
+    {% for ab in char.abilities.as_list() %}
+    <div class="ability-box">
+      <div class="mod">{{ fmt_mod(ab.modifier) }}</div>
+      <div class="label">{{ ab.name }}</div>
+      <div class="score">{{ ab.score }}</div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+{% endmacro %}
+
+{# --- Defense (resistances only — languages/features moved to header) --- #}
+{% macro section_defense() %}
+{% if char.defense.resistances %}
+<div class="section">
+  <div class="section-title">Resistances</div>
+  <div>{{ char.defense.resistances | join(", ") }}</div>
+</div>
+{% endif %}
+{% endmacro %}
+
+{# --- Skills --- #}
+{% macro section_skills() %}
+{% if display_skills %}
+<div class="section">
+  <div class="section-title">Skills</div>
+  <div class="skill-list">
+    {% for s in display_skills %}
+    <div class="skill-row">
+      <span class="name">{{ s.name }}</span>
+      <span class="mod">{{ fmt_mod(s.modifier) }}</span>
+      <span class="prof">{{ prof_label(s.prof_rank) }}</span>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+{% endmacro %}
+
+{# --- Equipment (weapons + items combined) --- #}
+{% macro section_weapons() %}
+{% if char.weapons or char.items %}
+<div class="section">
+  <div class="section-title">Equipment <span class="money-inline">{{ char.money.display() }}</span></div>
+  {% for w in char.weapons %}
+  <div class="weapon-line">
+    <span class="equip-weapon">{{ w.display or w.name }}</span>
+    <span class="weapon-stats">{{ fmt_mod(w.attack) }} · {{ w.damage_dice }}{{ fmt_bonus(w.damage_bonus) }} {{ w.damage_type }}</span>
+    {% if w.material %}<span class="weapon-material">{{ w.material }}</span>{% endif %}
+  </div>
+  {% endfor %}
+  {% if char.items %}
+  <div class="equipment-line">
+    {% for item in char.items %}
+    <span class="equip-item">{{ item.name }}{% if item.qty > 1 %} ×{{ item.qty }}{% endif %}</span>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+{% endif %}
+{% endmacro %}
+
+{# items rendered inside weapons macro #}
+{% macro section_items() %}{% endmacro %}
+
+{# --- Spellcasting (expanded with descriptions, two-column within each rank) --- #}
+{% macro section_spellcasting() %}
+{% if char.spellcasters %}
+<div class="section">
+  <div class="section-title">Spellcasting</div>
+  {% for caster in char.spellcasters %}
+  {% if not loop.first %}<hr class="caster-sep">{% endif %}
+  <div class="caster-block">
+    <div class="caster-header">{{ caster.name }}
+      {%- if caster.innate %} (Innate){% endif %}
+    </div>
+    <div class="caster-meta">
+      {{ caster.tradition | capitalize }} · {{ caster.casting_type | capitalize }}
+      · DC {{ caster.spell_dc }} · Atk {{ fmt_mod(caster.spell_attack) }}
+    </div>
+
+    {% if caster.prepared and include_prepared %}
+      {% for rank in caster.prepared %}
+      <div class="spell-rank">
+        <span class="spell-rank-label">
+          {% if rank.spell_level == 0 %}Cantrips{% else %}Rank {{ rank.spell_level }}{% endif %}
+        </span>
+        {% if rank.spell_level > 0 and caster.per_day | length > rank.spell_level %}
+          <span class="spell-rank-slots">({{ caster.per_day[rank.spell_level] }}/day)</span>
+        {% endif %}
+        <div class="spell-rank-list">
+        {% for s in rank.spells %}
+        <div class="spell-entry">
+          <span class="spell-name">{{ s }}</span>
+          {% if spell_desc.get(s) %}<span class="spell-desc">— {{ spell_desc[s] }}</span>{% endif %}
+        </div>
+        {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    {% elif caster.spells %}
+      {% for rank in caster.spells %}
+      <div class="spell-rank">
+        <span class="spell-rank-label">
+          {% if rank.spell_level == 0 %}Cantrips{% else %}Rank {{ rank.spell_level }}{% endif %}
+        </span>
+        {% if rank.spell_level > 0 and caster.per_day | length > rank.spell_level %}
+          <span class="spell-rank-slots">({{ caster.per_day[rank.spell_level] }}/day)</span>
+        {% endif %}
+        <div class="spell-rank-list">
+        {% for s in rank.spells %}
+        <div class="spell-entry">
+          <span class="spell-name">{{ s }}</span>
+          {% if spell_desc.get(s) %}<span class="spell-desc">— {{ spell_desc[s] }}</span>{% endif %}
+        </div>
+        {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+  {% endfor %}
+  {% if char.focus_spells %}
+  <hr class="caster-sep">
+  <div class="caster-block">
+    <div class="caster-header">Focus Spells</div>
+    <div class="caster-meta">{{ char.focus_points }} Focus Point{{ "s" if char.focus_points != 1 }}</div>
+    <div class="spell-rank-list">
+    {% for fs in char.focus_spells %}
+    <div class="spell-entry">
+      <span class="spell-name">{{ fs.name }}</span> <span class="spell-rank-slots">({{ fs.tradition }})</span>
+      {% if spell_desc.get(fs.name) %}<span class="spell-desc">— {{ spell_desc[fs.name] }}</span>{% endif %}
+    </div>
+    {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endif %}
+{% endmacro %}
+
+{# focus now rendered inside spellcasting macro #}
+{% macro section_focus() %}{% endmacro %}
+
+{# --- Dispatch macro --- #}
+{% macro render_section(section_id) %}
+{% if section_id == "abilities" %}{{ section_abilities() }}
+{% elif section_id == "defense" %}{{ section_defense() }}
+{% elif section_id == "skills" %}{{ section_skills() }}
+{% elif section_id == "weapons" %}{{ section_weapons() }}
+{% elif section_id == "items" %}{{ section_items() }}
+{% elif section_id == "spellcasting" %}{{ section_spellcasting() }}
+{% elif section_id == "focus" %}{{ section_focus() }}
+{% endif %}
+{% endmacro %}
+
+{# ==================== DOCUMENT ==================== #}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ char.identity.name }} — One-Pager</title>
+{% if font_source == "google" %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+{% endif %}
+<style>
+{{ base_css }}
+{{ print_css }}
+{{ theme_css }}
+</style>
+</head>
+<body>
+
+{# ==================== HEADER (name+stats left, features right) ==================== #}
+<div class="page-header">
+  <div class="header-left">
+    <div class="char-name">{{ char.identity.name }}</div>
+    <div class="char-subtitle">
+      Level {{ char.identity.level }} {{ char.identity.ancestry }}
+      {%- if char.identity.heritage %} ({{ char.identity.heritage }}){% endif %}
+      {{ char.identity.char_class }}
+      {%- if char.identity.background %} · {{ char.identity.background }}{% endif %}
+      {%- if char.identity.alignment and char.identity.alignment != "N" %} · {{ char.identity.alignment }}{% endif %}
+      · Speed: {{ char.mobility.speed }} ft
+    </div>
+    {% if char.identity.languages %}
+    <div class="header-inline-line">
+      <span class="header-inline-label">Languages</span>
+      <span class="languages">{{ char.identity.languages | join(", ") }}</span>
+    </div>
+    {% endif %}
+    {% if key_features %}
+    <div class="header-inline-line">
+      <span class="header-inline-label">Features</span>
+      {% for s in key_features %}
+      <span class="key-feature">{{ s }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+  <div class="header-right">
+    {% if char.abilities %}
+    <div class="ability-box-group">
+      {% for ab in char.abilities.as_list() %}
+      <div class="ability-box">
+        <div class="mod">{{ fmt_mod(ab.modifier) }}</div>
+        <div class="label">{{ ab.name }}</div>
+        <div class="score">{{ ab.score }}</div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <div class="stat-box-group">
+      <div class="ability-box"><div class="mod">{{ char.defense.ac }}</div><div class="label">AC</div></div>
+      <div class="ability-box"><div class="mod">{{ char.defense.hp }}</div><div class="label">HP</div></div>
+      <div class="ability-box"><div class="mod">{{ fmt_mod(char.defense.perception) }}</div><div class="label">Perc</div></div>
+      <div class="ability-box"><div class="mod">{{ fmt_mod(char.defense.fortitude) }}</div><div class="label">Fort</div></div>
+      <div class="ability-box"><div class="mod">{{ fmt_mod(char.defense.reflex) }}</div><div class="label">Ref</div></div>
+      <div class="ability-box"><div class="mod">{{ fmt_mod(char.defense.will) }}</div><div class="label">Will</div></div>
+    </div>
+  </div>
+</div>
+
+{# ==================== SECTIONS ==================== #}
+{% for section_id in profile.section_order %}
+{{ render_section(section_id) }}
+{% endfor %}
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+@page {
+  size: letter;
+  margin: 0.35in;
+}
+
+@media print {
+  html, body {
+    height: 100%;
+    overflow: hidden;
+  }
+  .section {
+    break-inside: avoid;
+  }
+  .page-header {
+    padding-top: 0;
+  }
+}

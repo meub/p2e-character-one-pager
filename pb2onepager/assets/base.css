@@ -1,0 +1,274 @@
+/* === Reset & Base === */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  font-family: 'Alegreya', Georgia, serif;
+  font-size: 10.5px;
+  line-height: 1.35;
+  color: #000;
+  background: #fff;
+}
+body {
+  max-width: 8.5in;
+  margin: 0 auto;
+  padding: 0.35in;
+}
+
+/* === Page Header (two-panel) === */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 2px 0 5px;
+  margin-bottom: 6px;
+  gap: 16px;
+}
+.header-left {
+  flex: 1;
+}
+.char-name {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0.5px;
+}
+.char-subtitle {
+  font-size: 11px;
+  color: #000;
+  margin-top: 1px;
+}
+.header-right {
+  flex-shrink: 0;
+}
+
+/* === Inline lines under stat bar (languages, key features) === */
+.header-inline-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin-top: 2px;
+  font-size: 9.5px;
+  color: #000;
+}
+.header-inline-label {
+  font-size: 8px;
+  font-variant: small-caps;
+  text-transform: lowercase;
+  font-weight: 600;
+  color: #000;
+  letter-spacing: 0.5px;
+  margin-right: 4px;
+  align-self: center;
+}
+.key-feature {
+  white-space: nowrap;
+}
+.key-feature:not(:last-child)::after {
+  content: " · ";
+  color: #aaa;
+  white-space: pre;
+}
+
+/* === Ability Score Box (upper right) === */
+.ability-box-group {
+  display: flex;
+  gap: 2px;
+  border: 1.5px solid #999;
+  border-radius: 4px 4px 0 0;
+  padding: 2px 6px 1px;
+}
+
+/* === Stat Box (under abilities in header-right) === */
+.stat-box-group {
+  display: flex;
+  gap: 2px;
+  border: 1.5px solid #999;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  padding: 2px 6px 2px;
+}
+
+/* === Section Cards === */
+.section {
+  break-inside: avoid;
+  margin-bottom: 5px;
+}
+.section-title {
+  font-size: 11px;
+  font-weight: 700;
+  font-variant: small-caps;
+  text-transform: lowercase;
+  letter-spacing: 0.8px;
+  border-bottom: 1px solid #aaa;
+  padding-bottom: 1px;
+  margin-bottom: 2px;
+  color: #000;
+}
+
+/* === Abilities Row === */
+.ability-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 2px;
+  margin-bottom: 2px;
+}
+.ability-box {
+  text-align: center;
+  flex: 1;
+  min-width: 30px;
+}
+.ability-box-group .ability-box {
+  flex: 0 0 auto;
+}
+.ability-box .mod {
+  font-size: 14px;
+  font-weight: 700;
+}
+.ability-box-group .ability-box .mod {
+  font-size: 13px;
+}
+.ability-box .label {
+  font-size: 8px;
+  font-variant: small-caps;
+  color: #000;
+  text-transform: lowercase;
+}
+.ability-box .score {
+  font-size: 8px;
+  color: #000;
+}
+
+/* === Skills === */
+.skill-list {
+  column-count: 3;
+  column-gap: 14px;
+}
+.skill-row {
+  display: flex;
+  justify-content: space-between;
+  break-inside: avoid;
+  padding: 0.5px 0;
+}
+.skill-row .name {
+  flex: 1;
+}
+.skill-row .mod {
+  font-weight: 600;
+  min-width: 24px;
+  text-align: right;
+}
+.skill-row .prof {
+  font-size: 8px;
+  color: #000;
+  min-width: 12px;
+  text-align: right;
+}
+
+/* === Equipment (combined weapons + items) === */
+.equipment-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1px 0;
+}
+.equipment-line > span {
+  white-space: nowrap;
+}
+.equipment-line > span:not(:last-child)::after {
+  content: " · ";
+  color: #aaa;
+  white-space: pre;
+}
+.weapon-line {
+  padding: 0.5px 0;
+}
+.equip-weapon {
+  font-weight: 700;
+}
+.weapon-stats {
+  font-size: 9.5px;
+  font-weight: 400;
+  color: #000;
+}
+.weapon-material {
+  font-size: 9px;
+  color: #000;
+  font-style: italic;
+}
+.equip-item {
+  color: #000;
+}
+.money-inline {
+  float: right;
+  font-size: 9.5px;
+  font-weight: 600;
+  font-variant: normal;
+  text-transform: none;
+  letter-spacing: 0;
+  color: #000;
+}
+
+/* === Spellcasting === */
+.caster-sep {
+  border: none;
+  border-top: 1px dashed #bbb;
+  margin: 4px 0;
+}
+.caster-block {
+  margin-bottom: 4px;
+}
+.caster-header {
+  font-weight: 700;
+  font-size: 11px;
+}
+.caster-meta {
+  font-size: 9.5px;
+  color: #000;
+  margin-bottom: 2px;
+}
+.spell-rank {
+  margin-bottom: 2px;
+}
+.spell-rank-label {
+  font-weight: 700;
+  font-size: 9.5px;
+  font-variant: small-caps;
+  text-transform: lowercase;
+}
+.spell-rank-slots {
+  font-size: 8.5px;
+  color: #000;
+}
+.spell-rank-list {
+  font-size: 10px;
+  column-count: 2;
+  column-gap: 14px;
+}
+.spell-entry {
+  margin-bottom: 1px;
+  padding-left: 4px;
+  break-inside: avoid;
+}
+.spell-entry .spell-name {
+  font-weight: 700;
+  font-size: 10px;
+}
+.spell-entry .spell-desc {
+  font-size: 9px;
+  color: #000;
+  font-style: italic;
+}
+
+/* === Focus === */
+.focus-header {
+  font-weight: 700;
+  font-size: 10px;
+}
+.focus-spell-name {
+  font-size: 10px;
+}
+
+/* === Languages === */
+.languages {
+  font-size: 9.5px;
+  color: #000;
+}

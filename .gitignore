@@ -1,0 +1,24 @@
+# Generated output
+*.html
+*.debug.json
+
+# Example / personal character data
+*.json
+!pyproject.toml
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+dist/
+build/
+*.whl
+
+# Virtual environments
+.venv/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db

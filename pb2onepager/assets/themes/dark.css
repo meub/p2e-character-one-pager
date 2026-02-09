@@ -1,0 +1,28 @@
+html, body {
+  background: #1e1e1e;
+  color: #ddd;
+}
+.page-header {
+  border-bottom-color: #666;
+}
+.char-subtitle { color: #aaa; }
+.stat-bar { border-bottom-color: #555; }
+.stat-pill .label { color: #999; }
+.stat-pill .prof-badge { color: #777; }
+.section-title { color: #ccc; border-bottom-color: #666; }
+.ability-box .label { color: #999; }
+.ability-box .score { color: #777; }
+.skill-row .prof { color: #777; }
+.feat-group-title { color: #aaa; }
+.feat-list .feat-level { color: #777; }
+.weapon-stats { color: #bbb; }
+.weapon-material { color: #888; }
+.item-invested { color: #777; }
+.caster-meta { color: #aaa; }
+.spell-rank-slots { color: #888; }
+.specials-list { color: #bbb; }
+.languages { color: #aaa; }
+
+@media print {
+  html, body { background: #fff; color: #1a1a1a; }
+}
