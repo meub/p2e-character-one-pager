@@ -2,6 +2,10 @@
 
 A CLI tool that converts [Pathbuilder 2e](https://pathbuilder2e.com/) character exports into single-page HTML character sheets, optimized for printing and quick table reference.
 
+## Example Output
+
+![Example one-pager for a level 8 Elf Wizard](docs/example.png)
+
 ## Installation
 
 Requires Python 3.11+.
