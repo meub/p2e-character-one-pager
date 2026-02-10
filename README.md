@@ -1,4 +1,4 @@
-# pb2onepager
+# p2e-character-one-pager
 
 A CLI tool that converts [Pathbuilder 2e](https://pathbuilder2e.com/) character exports into single-page HTML character sheets, optimized for printing and quick table reference.
 
@@ -83,13 +83,13 @@ pyenv local 3.13
 
 ### Manual Installation
 
-If you prefer to install the `pb2onepager` command directly instead of using `run.sh`:
+If you prefer to install the `p2e-character-one-pager` command directly instead of using `run.sh`:
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -e .
-pb2onepager build character.json
+p2e-character-one-pager build character.json
 ```
 
 ## How It Works
@@ -111,7 +111,7 @@ pb2onepager build character.json
 ## Project Structure
 
 ```
-pb2onepager/
+p2e_character_one_pager/
 ├── cli.py          # Click CLI entry point
 ├── parse.py        # Pathbuilder JSON → CharacterModel
 ├── model.py        # Pydantic data models

@@ -38,7 +38,7 @@ Create a command-line Python script that ingests a **Pathbuilder 2e JSON export*
 1. User exports character JSON from Pathbuilder
 2. User runs:
    ```bash
-   pb2onepager build coren.json --out coren.html
+   p2e-character-one-pager build coren.json --out coren.html
    ```
 3. Opens HTML in browser or prints to PDF
 
@@ -121,7 +121,7 @@ A small Python package with:
 
 ### 2.2 Repository layout
 ```
-pb2onepager/
+p2e_character_one_pager/
   __init__.py
   cli.py
   parse.py

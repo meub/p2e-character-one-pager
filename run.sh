@@ -62,4 +62,4 @@ if [ ! -f "$VENV_DIR/.installed" ] || [ "$SCRIPT_DIR/pyproject.toml" -nt "$VENV_
 fi
 
 # Run the tool
-exec "$VENV_DIR/bin/pb2onepager" build "$@"
+exec "$VENV_DIR/bin/p2e-character-one-pager" build "$@"

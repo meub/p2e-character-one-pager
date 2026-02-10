@@ -3,7 +3,7 @@ requires = ["setuptools>=68.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "pb2onepager"
+name = "p2e-character-one-pager"
 version = "0.1.0"
 description = "Pathbuilder 2e → single-page HTML character sheet generator"
 requires-python = ">=3.11"
@@ -14,10 +14,10 @@ dependencies = [
 ]
 
 [project.scripts]
-pb2onepager = "pb2onepager.cli:main"
+p2e-character-one-pager = "p2e_character_one_pager.cli:main"
 
 [tool.setuptools.packages.find]
-include = ["pb2onepager*"]
+include = ["p2e_character_one_pager*"]
 
 [tool.setuptools.package-data]
-pb2onepager = ["assets/**/*.css", "templates/**/*.j2"]
+p2e_character_one_pager = ["assets/**/*.css", "templates/**/*.j2"]

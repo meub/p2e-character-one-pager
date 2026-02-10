@@ -1,4 +1,4 @@
-"""CLI entry point for pb2onepager."""
+"""CLI entry point for p2e-character-one-pager."""
 
 from __future__ import annotations
 
